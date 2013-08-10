@@ -1,0 +1,29 @@
+*.py[cod]
+
+# Database file for testing
+*.sqlite3
+
+# Packages
+*.egg
+*.egg-info
+bin
+include
+lib
+lib64
+__pycache__
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# IDE related
+.mr.developer.cfg
+.project
+.pydevproject
+
+# etc
+.Python
