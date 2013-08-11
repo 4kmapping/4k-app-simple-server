@@ -1,0 +1,11 @@
+WSGIScriptAlias / /home/admin/4k-app-simple-server/appserver/appserver/wsgi.py
+WSGIPassAuthorization On
+WSGIPythonPath /home/admin/4k-app-simple-server/appserver:/home/admin/4k-app-simple-server/lib/python2.7/site-packages
+
+
+<Directory /home/admin/4k-app-simple-server/appserver/appserver>
+    <Files wsgi.py>
+        Order deny,allow
+        Allow from all
+    </Files>
+</Directory>
