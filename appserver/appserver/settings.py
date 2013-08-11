@@ -22,8 +22,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'prj_4k',   # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'admin',
-        'PASSWORD': 'admin',
+        'USER': 'projadmin',
+        'PASSWORD': 'projadmin',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
