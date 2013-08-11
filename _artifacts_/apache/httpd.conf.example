@@ -1,3 +1,16 @@
+Alias /robots.txt /home/admin/4k-app-simple-server/appserver/STATIC/robots.txt
+Alias /favicon.ico /home/admin/4k-app-simple-server/appserver/STATIC/favicon.ico
+
+AliasMatch ^/([^/]*\.css) /home/admin/4k-app-simple-server/appserver/STATIC/styles/$1
+
+Alias /static/ /home/admin/4k-app-simple-server/appserver/STATIC/
+
+<Directory /home/admin/4k-app-simple-server/appserver/STATIC>
+    Order deny,allow
+    Allow from all
+</Directory>
+
+
 WSGIScriptAlias / /home/admin/4k-app-simple-server/appserver/appserver/wsgi.py
 WSGIPassAuthorization On
 WSGIPythonPath /home/admin/4k-app-simple-server/appserver:/home/admin/4k-app-simple-server/lib/python2.7/site-packages
