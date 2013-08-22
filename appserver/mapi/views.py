@@ -21,8 +21,15 @@ def get_apikey(request):
     '''
 
 	if request.POST:
-		username = request.POST.get('username','')
+
+		if 'username' not in request.POST or 'password' not in request.POST:
+			response = HttpResponse()
+			response.status_code = 401
+			return response
+
+		username = request.POST.get('username','no_user')
         password = request.POST.get('password','')
+        #logger.error(username, password)
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
 			# From DB, get a corresponding ApiKey for a user.
