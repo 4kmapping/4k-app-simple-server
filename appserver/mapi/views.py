@@ -28,7 +28,8 @@ def get_apikey(request):
 			return response
 
 		username = request.POST.get('username','no_user')
-        password = request.POST.get('password','')
+        raw_passwd = request.POST.get('password','')
+        password = base64.b64decode(raw_passwd)
         #logger.error(username, password)
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
