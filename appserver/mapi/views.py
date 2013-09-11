@@ -1,8 +1,11 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseBadRequest, HttpResponseNotAllowed 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from mapi.models import LocationPictureForm
 from sys import stdout
 from tastypie.models import ApiKey
 import base64
@@ -50,7 +53,64 @@ def get_apikey(request):
 	response.status_code = 401
 	return response
 
-	
+
+@csrf_exempt	
+def store_locpic(request):
+    '''
+    Store a loction picture from mobile application request.
+    '''
+
+    if request.POST:
+        # Authenticate user with username & ApiKey in header
+        # ---
+        if (request.META.get('HTTP_AUTHORIZATION') and 
+            request.META['HTTP_AUTHORIZATION'].lower().startswith('apikey')):
+            (auth_type, data) = request.META['HTTP_AUTHORIZATION'].split()
+
+            if auth_type.lower() != 'apikey':
+                return HttpResponseBadRequest()
+
+            username, api_key = data.split(':',1)
+            # Grab user and his/her apikey from db.
+            try:
+                user = User.objects.get(username=username)
+                key = ApiKey.objects.get(user=user)
+                if key.key != api_key:
+                    return HttpResponseForbidden()
+            except ValueError:
+                return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
+
+        # Request passed authentication, now store picture.
+        # ---
+        form = LocationPictureForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('The picture was saved successfully.')
+        else:
+            response = HttpResponseBadRequest()
+            response['REASON'] = 'Form is invalid.'
+            return response   
+
+    else:
+        return HttpResponseNotAllowed('Allowed HTTP methods are: POST')
+
+    return HttpResponseBadRequest('Reached the end without saving.')
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 
 

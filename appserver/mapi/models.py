@@ -1,9 +1,11 @@
 from django.db import models
+from django.forms import ModelForm
 from django.contrib.auth.models import User, Group
 
 # Create your models here.
 
 class Location(models.Model):
+	# location id will be username + device_id + random hash string
 	orig_id = models.IntegerField(max_length=200)
 	desc = models.TextField()
 	tags = models.TextField() # comma separated list of tags.
@@ -19,5 +21,22 @@ class Location(models.Model):
 	# This oz_wid will contain an omega zone id and server side process will identify 
 	# and store the zone id by looking at lat/lon in a record. 
 	oz_wid = models.CharField(max_length=50, null=True, blank=True)
+
+
+class LocationPicture(models.Model):
+	'''
+	Stores pictures taken on a location.
+	'''
+	pic = models.FileField(upload_to='Loc_Pics')
+	# this from location orig_id
+	loc_orig_id = models.TextField(max_length=200)  
+	pic_name = models.TextField()
+
+
+class LocationPictureForm(ModelForm):
+	class Meta:
+		model = LocationPicture
+		fields = ['pic', 'loc_id', 'pic_name']
+
 	
 	

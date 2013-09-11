@@ -1,18 +1,30 @@
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
+from tastypie.models import ApiKey
 from tastypie import fields
 from tastypie.authentication import SessionAuthentication, BasicAuthentication, ApiKeyAuthentication
-from mapi.models import Location
+from mapi.models import Location, LocationPicture
 from mapi.MAPIAuthorization import UserObjectsOnlyAuthorization
 from django.contrib.auth.models import User
 
 
 
+
+class LocationPictureResource(ModelResource):
+    pic = fields.FileField(attribute='pic')
+    class Meta:
+        queryset = LocationPicture.objects.all()
+        resource_name = 'loc_pic'
+        authentication = ApiKeyAuthentication()
+
+
+
 class UserResource(ModelResource):
     class Meta:
-        queryset = User.objects.all()
+        queryset = User.objects.all() 
         resource_name = 'user'
         excludes = ['email', 'password', 'is_active', 'is_staff', 'is_superuser']
         filtering = { 'username': ALL, 'id': ALL, }
+        authentication=ApiKeyAuthentication() 
 
         
 
@@ -31,7 +43,6 @@ class LocationResource(ModelResource):
         filtering = {
             'user': ALL_WITH_RELATIONS,
         }  		
-		
 
     '''
     Custom object creation to set user from request and authentication mechanism.
