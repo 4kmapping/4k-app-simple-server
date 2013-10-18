@@ -42,10 +42,15 @@ body {
 }
 
 a {
+	padding-bottom: 3px;
 	color: $happyBlue;
 	font-size: 18px;
 	text-decoration: none;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	&:hover {
+		border-bottom: 1px solid $happyBlue;
+	}
 }
 
 .toggle {
@@ -68,6 +73,8 @@ a {
 
 header {
 
+	position: relative;
+	z-index: 100;
 	padding: 10px 15px;
 	background-color: $white;
 
@@ -97,4 +104,14 @@ header {
 		clear: both;
 	}
 
+}
+
+.main {
+	position: absolute;
+	top: 54px; left: 0; right: 0; bottom: 0;
+	z-index: 10;
+
+	&#map a {
+		font-size: 10px;
+	}
 }
