@@ -7,6 +7,24 @@ $(document).ready(function(){
         maxZoom: 18
     }).addTo(map);
 
-    var marker = L.marker([52.3731, 4.8922]).addTo(map);
+    $.ajax({
+        url: '/api/0.1/location/',
+        // crossDomain: true,
+        // contentType: 'application/json',
+        beforeSend: function(request){
+            request.setRequestHeader('Authorization', 'ApiKey joshua:yolo');
+        },
+        success: function(data){
+
+            $.each(data.objects, function(index, location){
+
+                L.marker([location.lat, location.lon]).addTo(map);
+
+            }) ;
+
+        }
+    }) ;
+
+
 
 }) ;
