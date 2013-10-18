@@ -58,5 +58,28 @@ header {
   right: 0;
   bottom: 0;
   z-index: 10; }
-  .main#map a {
+  .main #map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
+  .main p {
+    margin-top: 300px;
+    text-align: center;
+    font-style: italic;
+    color: #434343; }
+  .main a {
     font-size: 10px; }
+
+footer {
+  width: 500px;
+  padding: 10px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 75;
+  background-color: #c8c8c8; }
+  footer h3 {
+    float: left;
+    margin-right: 10px; }
