@@ -14,10 +14,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-	
-
 @csrf_exempt
 def get_apikey(request):
+
 	'''
 	Provide an API key for a user after authenticating the user. 
     Once a user get the token, the token will be used for communication instead of password.
@@ -98,19 +97,3 @@ def store_locpic(request):
         return HttpResponseNotAllowed('Allowed HTTP methods are: POST')
 
     return HttpResponseBadRequest('Reached the end without saving.')
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-

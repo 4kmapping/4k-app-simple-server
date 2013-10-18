@@ -36,6 +36,3 @@ class LocationPictureForm(ModelForm):
 	class Meta:
 		model = LocationPicture
 		fields = ['pic', 'loc_orig_id']
-
-	
-	

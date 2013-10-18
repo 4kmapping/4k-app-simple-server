@@ -26,7 +26,7 @@ class UserResource(ModelResource):
         filtering = { 'username': ALL, 'id': ALL, }
         authentication=ApiKeyAuthentication() 
 
-        
+
 
 class LocationResource(ModelResource):
 # To include user info
@@ -54,6 +54,5 @@ class LocationResource(ModelResource):
     def obj_create(self, bundle, **kwargs):
         kwargs['user'] = bundle.request.user       
         return super(LocationResource, self).obj_create(bundle, **kwargs)
-
 
 

@@ -14,8 +14,10 @@ v01_api.register(LocationResource())
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'appserver.views.home', name='home'),
+    url(r'^$', 'appserver.views.home', name='home'),
     # url(r'^appserver/', include('appserver.foo.urls')),
+
+	# url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

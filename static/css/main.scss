@@ -1,0 +1,100 @@
+body, h1, h2, h3, h4, h5, h6, ul, table, p {
+	margin: 0;
+	padding: 0;
+}
+
+// colours!
+$white: #fff;
+$offWhite: #c3c3c3;
+
+$lightGrey: #e5e5e5;
+$dropShadowOnLightGrey: #d2d2d2;
+$offLightGrey: #dbdbdb;
+$darkLightGrey: #c8c8c8;
+$blackTextOnGrey: #7b7b7b;
+
+$happyBlue: #0079ff;
+
+$darkGrey: #434343;
+$blackGrey: #555555;
+$black: #000;
+
+@mixin dropshadow {
+	-webkit-box-shadow:  0px 0px 2px 2px rgba(1, 1, 1, .1);
+			box-shadow:  0px 0px 2px 2px rgba(1, 1, 1, .1);
+}
+
+@mixin horizontal-dropshadow {
+	-webkit-box-shadow:  2px 0px 2px 2px rgba(1, 1, 1, .1);
+			box-shadow:  2px 0px 2px 2px rgba(1, 1, 1, .1);
+}
+
+@mixin no-dropshadow {
+	-webkit-box-shadow:  none;
+			box-shadow:  none;
+}
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+
+	background-color: $lightGrey;
+}
+
+a {
+	color: $happyBlue;
+	font-size: 18px;
+	text-decoration: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.toggle {
+	width: 200px;
+	border: 1px solid $offLightGrey;
+	background-color: $lightGrey;
+
+	a {
+		display: inline-block;
+		width: 78px;
+		color: #575757;
+		padding: 5px 10px;
+		background-color: #F0F0F0;
+
+		&.selected {
+			background-color: $lightGrey;
+		}
+	}
+}
+
+header {
+
+	padding: 10px 15px;
+	background-color: $white;
+
+	@include horizontal-dropshadow ;
+
+	h1 {
+		padding-top: 5px;
+		font-size: 20px;
+		font-weight: 200;
+		float: left;
+	}
+
+	.toggle {
+
+		margin: 0 auto;
+
+	}
+
+	.export {
+		padding-top: 5px;
+		float: right;
+	}
+
+	&:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+
+}
