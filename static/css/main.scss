@@ -55,23 +55,22 @@ a {
 }
 
 .toggle {
-	width: 200px;
+	width: 199px;
 	border: 1px solid $offLightGrey;
 	background-color: $lightGrey;
 
 	a {
 		display: inline-block;
-		width: 77px;
+		width: 49%;
 		color: #575757;
 		font-size: 15px;
 		text-align: center;
-		padding: 5px 10px;
-		background-color: $lightGrey;
+		padding: 5px 0;
+		background-color: #F0F0F0;
 		border: none;
 
 		&.selected {
-			border-right: 1px solid $offLightGrey;
-			background-color: #F0F0F0;
+			background-color: $lightGrey;
 		}
 	}
 }
@@ -123,9 +122,22 @@ header {
 		top: 0; left: 0; right: 0; bottom: 0;	
 	}
 
+	#stats {
+		padding: 50px;
+
+		.stat {
+			float: left;
+			margin-right: 50px;
+		}
+	}
+
 	p {
 		font-style: italic;
 		color: $darkGrey;
+
+		span.number {
+			font-size: 90px;
+		}
 	}
 
 	a {
