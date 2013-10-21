@@ -1,13 +1,39 @@
+//for jshint to stop crying
+var $ = $,
+    L = L ;
+
 $(document).ready(function(){
+
+    var showLogin = function(){
+        $('#api_info').fadeIn() ;
+    } ;
+
+    $('#api_info').submit(function(){
+
+        var $this = $(this),
+            name = $this.find('input[name="api_name"]').val(),
+            key = $this.find('input[name="api_key"]').val() ;
+
+        localStorage.api_name = name ;
+        localStorage.api_key = key ;
+
+        $this.fadeOut();
+
+        init() ;
+
+        return false ;
+
+    }) ;
 
     var loadMap = function(){
 
+        if($('#map').length > 0) $('#map').remove();
+        $('section').prepend('<div id="map"></div>') ;
+
         $.ajax({
             url: '/api/0.1/location/',
-            // crossDomain: true,
-            // contentType: 'application/json',
             beforeSend: function(request){
-                request.setRequestHeader('Authorization', 'ApiKey ' + $('input[name="api_name"]').val() + ':' + $('input[name="api_key"]').val());
+                request.setRequestHeader('Authorization', 'ApiKey ' + localStorage.api_name + ':' + localStorage.api_key);
             },
             success: function(data){
 
@@ -27,19 +53,26 @@ $(document).ready(function(){
             },
             error: function(){
         
-                $('#map').remove();
-                $('section').prepend('<div id="map"></div>') ;
         
-                $('.main p').html('Your api info is wrong, please try again') ;
+                $('.main p').html('Your api info is wrong, please try again.') ;
 
             }
         }) ;
 
     } ;
 
-    $('footer input:last-of-type').blur(function(){
-        loadMap();
-    }) ;
+    var init = function(){
 
+        if(localStorage.api_name === undefined && localStorage.api_key === undefined){
+            showLogin() ;
+        }
+        else {
+            $('header').fadeIn() ;
+            loadMap();
+        }
+
+    } ;
+
+    init() ;
 
 }) ;
