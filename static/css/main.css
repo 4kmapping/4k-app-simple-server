@@ -73,6 +73,12 @@ header {
     .main #stats .stat {
       float: left;
       margin-right: 50px; }
+    .main #stats .chart rect {
+      stroke: white;
+      fill: steelblue; }
+    .main #stats .chart text {
+      fill: white;
+      font-weight: 100; }
   .main p {
     font-style: italic;
     color: #434343; }

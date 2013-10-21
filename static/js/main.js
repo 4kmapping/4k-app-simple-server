@@ -1,6 +1,7 @@
     //for jshint to stop crying
 var $ = $,
     L = L,
+    d3 = d3,
     //them app!
     app = {
 
@@ -108,11 +109,11 @@ var $ = $,
             var totalTags = 0,
                 totalTagOccurrences = {} ;
 
+            //some data processing goin' on
             $.each(app.data, function(){
                 
                 //making sure tags is an array
                 if(typeof this.tags === 'string') {
-                    console.log('jsonifying the string') ;
                     this.tags = $.parseJSON(this.tags.replace(/u'/g, "'").replace(/'/g, '"')) ;
                 }
 
@@ -131,15 +132,56 @@ var $ = $,
 
             }) ;
 
+            var totalTagOccurrencesTags = Object.keys(totalTagOccurrences),
+                totalTagOccurrencesValues = [] ;
+
+            $.each(totalTagOccurrences, function(index, value){
+                totalTagOccurrencesValues.push(value) ;
+            }) ;
+
             if($('#stats').length > 0) $('#stats').remove();
             $('section').prepend('<div id="stats"></div>') ;
 
             $('#stats').append('<p class="stat"><span class="number">' + app.data.length + '</span><br> total locations</p>') ;
             $('#stats').append('<p class="stat"><span class="number">' + totalTags + '</span><br> total tag entries</p>') ;
-            $('#stats').append('<p class="stat"><span class="number">' + Object.keys(totalTagOccurrences).length + '</span><br> unique tags</p>') ;
+            $('#stats').append('<p class="stat"><span class="number">' + totalTagOccurrencesTags.length + '</span><br> unique tags</p>') ;
 
-            console.log(app.data) ;
+            var topTags = d3.select('#stats')
+                            .append('svg')
+                            .attr('class', 'chart')
+                            .attr('width', 420)
+                            .attr('height', 40 * totalTagOccurrencesValues.length) ;
 
+            var x = d3.scale.linear()
+                    .domain([0, d3.max(totalTagOccurrencesValues)])
+                    .range([0, 440]);
+
+            topTags.selectAll("rect")
+                    .data(totalTagOccurrencesValues)
+                    .enter().append("rect")
+                    .attr("y", function(d, i) { return i * 40; })
+                    .attr("width", x)
+                    .attr("height", 40);
+
+            topTags.selectAll("text")
+                    .data(totalTagOccurrencesValues)
+                    .enter().append("text")
+                    .attr("x", x)
+                    .attr("y", function(d, i) { return i * 40 + 20; })
+                    .attr("dx", -10) // padding-right
+                    .attr("dy", ".35em") // vertical-align: middle
+                    .attr("text-anchor", "end") // text-align: right
+                    .text(String);
+
+            topTags.selectAll("label")
+                    .data(totalTagOccurrencesTags)
+                    .enter().append("text")
+                    .attr("x", x)
+                    .attr("y", function(d, i) { return i * 40 + 20; })
+                    .attr("dx", 10) // padding-right
+                    .attr("dy", ".35em") // vertical-align: middle
+                    .attr("text-anchor", "left") // text-align: right
+                    .text(String);
 
         }
     } ;

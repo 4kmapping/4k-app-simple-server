@@ -129,6 +129,17 @@ header {
 			float: left;
 			margin-right: 50px;
 		}
+
+		.chart rect {
+			stroke: white;
+			fill: steelblue;
+		}
+
+		.chart text {
+			fill: white;
+			font-weight: 100;
+		}
+
 	}
 
 	p {
