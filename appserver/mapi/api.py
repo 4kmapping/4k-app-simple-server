@@ -5,7 +5,7 @@ from tastypie.authentication import SessionAuthentication, BasicAuthentication, 
 from mapi.models import Location, LocationPicture
 from mapi.MAPIAuthorization import UserObjectsOnlyAuthorization
 from django.contrib.auth.models import User
-
+from utilities import LocationJSONSerializer
 
 
 
@@ -42,7 +42,8 @@ class LocationResource(ModelResource):
         authorization = UserObjectsOnlyAuthorization()
         filtering = {
             'user': ALL_WITH_RELATIONS,
-        }  		
+        }  
+        serializer = LocationJSONSerializer()		
 
     '''
     Custom object creation to set user from request and authentication mechanism.
