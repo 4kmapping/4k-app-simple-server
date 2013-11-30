@@ -14,7 +14,6 @@ v01_api.register(LocationResource())
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'appserver.views.home', name='home'),
     # url(r'^appserver/', include('appserver.foo.urls')),
 
 	# url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
@@ -26,5 +25,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v01_api.urls)),
     url(r'^m/', include('mapi.urls')),
-    
+    url(r'^$', include('main.urls')),
 )

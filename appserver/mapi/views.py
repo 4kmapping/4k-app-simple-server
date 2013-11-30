@@ -86,8 +86,12 @@ def store_locpic(request):
         form = LocationPictureForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
-            return HttpResponse('The picture was saved successfully.')
+            username_from_form = form.cleaned_data['username']
+            if (username is username_from_form):
+                form.save()
+                return HttpResponse('The picture was saved successfully.')
+            else:
+                return HttpResponse(content='Not authorized to save a picture.', status=403)
         else:
             response = HttpResponseBadRequest()
             response['REASON'] = 'Form is invalid.'
