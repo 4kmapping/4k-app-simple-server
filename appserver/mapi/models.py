@@ -52,6 +52,8 @@ class Location(models.Model):
 	contactPhone = models.TextField(null=True, blank=True)
 	contactWebsite = models.TextField(null=True, blank=True)
 
+	dataId = models.TextField(null=True, blank=True)
+
 	# Server side Information
 	# These are additional data fields.
 	# ---
@@ -76,7 +78,7 @@ class LocationPicture(models.Model):
 class LocationPictureForm(ModelForm):
 	class Meta:
 		model = LocationPicture
-		fields = ['pic', 'username']
+		fields = ['pic','username']
 
 
 

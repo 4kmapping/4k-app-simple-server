@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from mapi.models import LocationPictureForm
+from mapi.models import LocationPicture, LocationPictureForm
 from sys import stdout
 from tastypie.models import ApiKey
 import base64
@@ -53,20 +53,29 @@ def get_apikey(request):
 	return response
 
 
+
 @csrf_exempt	
 def store_locpic(request):
     '''
     Store a loction picture from mobile application request.
     '''
 
-    if request.POST:
+    username = ''
+
+    if request.method == 'POST':
         # Authenticate user with username & ApiKey in header
         # ---
+
+        print "in side of photo POST"
+
         if (request.META.get('HTTP_AUTHORIZATION') and 
             request.META['HTTP_AUTHORIZATION'].lower().startswith('apikey')):
             (auth_type, data) = request.META['HTTP_AUTHORIZATION'].split()
 
             if auth_type.lower() != 'apikey':
+
+                print 'apikey is not set', auth_type.lower()
+
                 return HttpResponseBadRequest()
 
             username, api_key = data.split(':',1)
@@ -74,30 +83,44 @@ def store_locpic(request):
             try:
                 user = User.objects.get(username=username)
                 key = ApiKey.objects.get(user=user)
+                
                 if key.key != api_key:
+
+                    print 'key is different'
+
                     return HttpResponseForbidden()
             except ValueError:
+
+                print 'Storing photo failed'
+
                 return HttpResponseBadRequest()
         else:
+            
+            print 'photo POSTing, authorization failed'
+
             return HttpResponseBadRequest()
 
         # Request passed authentication, now store picture.
         # ---
         form = LocationPictureForm(request.POST, request.FILES)
-
+        
         if form.is_valid():
-            username_from_form = form.cleaned_data['username']
-            if (username is username_from_form):
-                form.save()
-                return HttpResponse('The picture was saved successfully.')
-            else:
-                return HttpResponse(content='Not authorized to save a picture.', status=403)
+            locpic = form.save(commit=False)
+            locpic.username = username
+            locpic.save()
+            
+            return HttpResponse('The picture was saved successfully.')
         else:
             response = HttpResponseBadRequest()
             response['REASON'] = 'Form is invalid.'
-            return response   
 
+            print 'form is not vaild', form.errors
+
+            return response   
+        
     else:
+        print "Error!"
         return HttpResponseNotAllowed('Allowed HTTP methods are: POST')
 
+    print "Error at the bottom"
     return HttpResponseBadRequest('Reached the end without saving.')

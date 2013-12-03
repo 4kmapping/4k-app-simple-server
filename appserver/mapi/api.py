@@ -9,14 +9,6 @@ from utilities import LocationJSONSerializer
 
 
 
-class LocationPictureResource(ModelResource):
-    pic = fields.FileField(attribute='pic')
-    class Meta:
-        queryset = LocationPicture.objects.all()
-        resource_name = 'loc_pic'
-        authentication = ApiKeyAuthentication()
-
-
 
 class UserResource(ModelResource):
     class Meta:
@@ -55,5 +47,21 @@ class LocationResource(ModelResource):
     def obj_create(self, bundle, **kwargs):
         kwargs['user'] = bundle.request.user       
         return super(LocationResource, self).obj_create(bundle, **kwargs)
+
+
+
+class LocationPictureResource(ModelResource):
+    pic = fields.FileField(attribute='pic')
+    class Meta:
+        queryset = LocationPicture.objects.all()
+        list_allowed_methods = ['get', 'post']
+        resource_name = 'loc_pic'
+        authentication = ApiKeyAuthentication()
+
+
+
+
+
+
 
 

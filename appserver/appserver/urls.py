@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from tastypie.api import Api
-from mapi.api import UserResource, LocationResource
+from mapi.api import UserResource, LocationResource, LocationPictureResource
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -10,7 +10,7 @@ admin.autodiscover()
 v01_api = Api(api_name='0.1')
 v01_api.register(UserResource())
 v01_api.register(LocationResource())
-
+v01_api.register(LocationPictureResource())
 
 urlpatterns = patterns('',
     # Examples:
