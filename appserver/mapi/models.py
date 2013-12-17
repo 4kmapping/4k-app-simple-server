@@ -22,7 +22,7 @@ class Location(models.Model):
 	tags = models.TextField() # comma separated list of tags.
 	latitude = models.FloatField()
 	longitude = models.FloatField()
-	created = models.TimeField(null=True, blank=True) # data creation timestamp
+	created = models.DateTimeField(null=True, blank=True) # data creation timestamp
 	photoId = models.TextField(null=True, blank=True)
 
 	evanType = models.BooleanField()
@@ -60,7 +60,7 @@ class Location(models.Model):
 	user = models.ForeignKey(User)
 	# Group id is associate with any operation that takes more than one person's activities.
 	project = models.ForeignKey(Project, null=True, blank=True)
-	uploaded = models.TimeField(auto_now=True) # time at which data is uploaded
+	uploaded = models.DateTimeField(auto_now=True) # time at which data is uploaded
 	# This oz_wid will contain an omega zone id and server side process will identify 
 	# and store the zone id by looking at lat/lon in a record. 
 	oz_wid = models.CharField(max_length=50, null=True, blank=True)
