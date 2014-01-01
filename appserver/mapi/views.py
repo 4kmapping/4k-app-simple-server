@@ -108,7 +108,8 @@ def store_locpic(request):
             locpic = form.save(commit=False)
             locpic.username = username
             locpic.save()
-            
+            print 'picture %s from %s savied successfully' % (locpic.pic.name, 
+                locpic.username)
             return HttpResponse('The picture was saved successfully.')
         else:
             response = HttpResponseBadRequest()
