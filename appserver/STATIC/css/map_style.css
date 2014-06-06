@@ -32,3 +32,8 @@ a:hover
 {
 	cursor:pointer;
 }
+
+.loc_info
+{
+	display:none;
+}

@@ -27,3 +27,6 @@ nosetests.xml
 
 # etc
 .Python
+
+*.sqlite
+appserver/appserver/settings.py

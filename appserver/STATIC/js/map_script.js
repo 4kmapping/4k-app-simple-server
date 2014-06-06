@@ -8,6 +8,9 @@ var markersArray = [];
 var map;
 var infowindow = new google.maps.InfoWindow();
 var myzoom;
+
+
+
 function initialize() 
 {
   lat = "32.807693";
@@ -33,57 +36,64 @@ function initialize()
 	mapTypeId : google.maps.MapTypeId.ROADMAP
   };
 
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-                                mapOptions); 
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
     
-  setMarkers(myLatLng);
+  setMarkers(32.807693, 34.997254);
 }
 
-function setMarkers(latlng) { 
-    marker = new google.maps.Marker({
-      position: latlng,
+function setMarkers(lat, lng) {
+
+	var coord = new google.maps.LatLng(lat,lng);
+	
+    var marker = new google.maps.Marker({
+      position: coord,
       map: map,
       animation: google.maps.Animation.DROP
      });
     markersArray.push(marker);
 
-      google.maps.event.addListener(marker, 'click', function(event){
-         popInfoWindow(latlng);
-      });
+    google.maps.event.addListener(marker, 'click', function(event){
+      popInfoWindow(marker, coord);
+    });
      
-  }
+}
 
-function popInfoWindow(latlng)
+function popInfoWindow(marker, coord)
 {
 		var geocoder = new google.maps.Geocoder();
 	    // map.setCenter(latlng);
-		geocoder.geocode({'latLng': latlng}, function(results, status) 
+		
+		var contentString = 
+			'<div id = "content">' +
+			'<h1 id = "Heading" class = "Heading" >  </h1>' +
+			'<div id = "bodyContent">';
+		
+		geocoder.geocode({'latLng': coord}, function(results, status) 
 		{
 			if (status == google.maps.GeocoderStatus.OK) 
 			{
 				if (results[1]) 
 				{
-					var contentString = 
-					'<div id = "content">' +
-					'<h1 id = "Heading" class = "Heading" >  </h1>' +
-					'<div id = "bodyContent">'+
-					  '<p> Address :' + results[1].formatted_address+ '</p>'+
-					  '<p> latitude, longitude : ' +'<b>' + lat +' '+ lng +'</b></p>' +
-					  '<p> bibleStudyType : <b> true </b> </p>' +
-					  '<p> contactEmail :  <b> gch3339@gmail.com </b> </p>'+
-					  '<p> contactPhone : <b> 010-2051-6869</b> </p>' +
-					  '<p> indigenousType: <b> true </b> </p>'+
-					  '<p> youthType : <b> true </b> </p>'+
-					'</div>'+
-					'</div>';
-
-					map.setZoom(14);
-					map.setCenter(marker.position);
-
-					infowindow.setContent(contentString);
-					infowindow.open(map, marker);
-				} 
+					contentString += '<p> Address :' + results[1].formatted_address+ '</p>';
+				}
 			}
+			
+			contentString +=
+			  '<p> latitude, longitude : ' +'<b>' + coord.lat() +' '+ coord.lng() +'</b></p>' +
+			  '<p> bibleStudyType : <b> true </b> </p>' +
+			  '<p> contactEmail :  <b> gch3339@gmail.com </b> </p>'+
+			  '<p> contactPhone : <b> 010-2051-6869</b> </p>' +
+			  '<p> indigenousType: <b> true </b> </p>'+
+			  '<p> youthType : <b> true </b> </p>'+
+			'</div>'+
+			'</div>';
+
+			map.setZoom(14);
+			map.setCenter(marker.position);
+
+			infowindow.setContent(contentString);
+			infowindow.open(map, marker);
+			
 		}	
 	);
 }
@@ -102,31 +112,27 @@ function home()
 
 function getLocations()
 {
-	$.ajax(
+	var json = $("#locations").text();
+	//alert(json);
+	
+	json = $.parseJSON(json);
+	
+	
+	for( i = 0 ; i < json.length ; i ++ )
 	{
-		type:"GET",
-		url:"http://192.237.166.7/api/0.1/location/",
-		dataType:"jsonp",
-		jsonp: "callback",
-		beforeSend: function(jqXHR, settings) 
-		{
-		  jqXHR.setRequestHeader("Authorization","ApiKey junwon:1q2w3e4r5t");
-	    },
-		success: function(data)
-		{
-		
-		
-			alert("OK!!!!!");
-		}
-	});
+		var loc = json[i];
+		setMarkers(loc.fields.latitude, loc.fields.longitude);
+	}
+	
 }
 
 
 
-google.maps.event.addDomListener(window, 'load', initialize);
+//google.maps.event.addDomListener(window, 'load', initialize);
 
 
 $(document).ready(function()
 {
+	initialize();
 	getLocations();
 });
