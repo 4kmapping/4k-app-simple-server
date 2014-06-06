@@ -25,5 +25,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v01_api.urls)),
     url(r'^m/', include('mapi.urls')),
-    url(r'^$', include('main.urls')),
+    url(r'^main/', include('main.urls')),
 )

@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Map marker</title>
+    
+	<link rel="stylesheet" type="text/css" href="{% static 'css/map_style.css' %}" />
+	
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAuvnD4WuYWb50K27NmHhEgMvDyUXtbXWA&sensor=true"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+	<script type="text/javascript" src="{% static 'js/map_script.js' %}"></script>
+	
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+	
+	<div class="home_button"><a onclick="home()">Home</a></div>
+    
+    {{locations}}
+	
+  </body>
+</html>
