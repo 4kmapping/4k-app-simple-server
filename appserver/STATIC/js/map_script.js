@@ -135,4 +135,6 @@ $(document).ready(function()
 {
 	initialize();
 	getLocations();
+	
+	getMapData();
 });
