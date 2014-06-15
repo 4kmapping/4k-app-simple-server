@@ -1,0 +1,5 @@
+django==1.5.1
+django-tastypie==0.10.0
+python-mimeparse==0.1.4
+pytz==2013b
+
