@@ -2,7 +2,7 @@ function getMapData()
 {
 	$.ajax({
 		type: "GET"
-		, url: "/api/0.1/location"
+		, url: "http://localhost:8000/api/0.1/location"
 		, dataType: "JSON"
 		, beforSend: function(xhr)
 		{

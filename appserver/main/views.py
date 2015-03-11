@@ -17,3 +17,7 @@ def map(request, prjid=None):
     locs_json = serializers.serialize('json', locations)
     return render_to_response('main/map.html',{'locations':locs_json}, 
         context_instance = RequestContext(request))
+
+
+def app_download(request):
+    return render_to_response('main/app_download.html', {}, context_instance=RequestContext(request))
